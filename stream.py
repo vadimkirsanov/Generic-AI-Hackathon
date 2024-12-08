@@ -7,7 +7,7 @@ import pydicom
 import tensorflow as tf
 from PIL import Image
 
-# Загрузка обученной модели 🎓
+# Загрузка обученной модели 
 model_path = '/Users/vadimkirsanov/Desktop/MIPT_DS/Python_coding_data/chest_xray_hac/my_model_4dense.keras'  # Укажите правильный путь
 model = tf.keras.models.load_model(model_path)
 
@@ -20,17 +20,17 @@ def preprocess_image(file, img_size):
     :param img_size: конечный размер изображения
     :return: предобработанное изображение
     """
-    # Определение типа файла и его чтение 🧐
+    # Определение типа файла и его чтение 
     if file.type == 'application/dicom':
         dicom = pydicom.dcmread(file)
         img = dicom.pixel_array
         img = cv2.cvtColor(img, cv2.COLOR_GRAY2RGB)
     else:
-        # Используем PIL для открытия любых изображений 🖼️
+        # Используем PIL для открытия любых изображений 🖼
         image = Image.open(file)
         img = np.array(image.convert('RGB'))
 
-    # Изменение размера и нормализация 📏
+    # Изменение размера и нормализация 
     img = cv2.resize(img, (img_size, img_size))
     img = img / 255.0
     return np.expand_dims(img, axis=0)
@@ -48,7 +48,7 @@ def predict_image(file):
 def main():
     st.title("Image Prediction")
 
-    # Загрузка файлов изображений 📂
+    # Загрузка файлов изображений 
     uploaded_files = st.file_uploader(
         "Upload image files (DICOM, JPG, PNG)",
         accept_multiple_files=True
@@ -70,16 +70,16 @@ def main():
 
         results_df = pd.DataFrame(results)
 
-        # Отображение DataFrame в Streamlit 🔍
+        # Отображение DataFrame в Streamlit 
         st.dataframe(results_df)
 
-        # Создание Excel файла в памяти 📝
+        # Создание Excel файла в памяти 
         excel_bytes = io.BytesIO()
         with pd.ExcelWriter(excel_bytes, engine='xlsxwriter') as writer:
             results_df.to_excel(writer, index=False)
         excel_bytes.seek(0)  # Перемещаем курсор в начало файла после записи
 
-        # Кнопка для скачивания Excel 📥
+        # Кнопка для скачивания Excel 
         st.download_button(
             label="Download Results as Excel",
             data=excel_bytes,
