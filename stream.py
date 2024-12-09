@@ -8,7 +8,7 @@ import tensorflow as tf
 from PIL import Image
 
 # Загрузка обученной модели 
-model_path = '/Users/vadimkirsanov/Desktop/MIPT_DS/Python_coding_data/chest_xray_hac/my_model_4dense.keras'  # Укажите правильный путь
+model_path = '/Users/vadimkirsanov/Desktop/MIPT_DS/Python_coding_data/chest_xray_hac/my_model_3.keras'  # Укажите правильный путь
 model = tf.keras.models.load_model(model_path)
 
 IMG_SIZE = 224  # Размер изображения, используемый при обучении модели
